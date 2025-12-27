@@ -33,7 +33,7 @@ select *,
             when weather_type <> previous_weather_type then 1
             else 0
            end) as difference
-from weather_with_previous_days as wwpd;
+from weather_with_previous_days;
 
 -- step 4
 with weather_with_previous_days as (select *,
@@ -44,7 +44,7 @@ with weather_with_previous_days as (select *,
                                                                when weather_type <> previous_weather_type then 1
                                                                else 0
                                                               end) as difference
-                                                   from weather_with_previous_days as wwpd)
+                                                   from weather_with_previous_days)
 select *,
        sum(difference) over (order by the_date
            rows between unbounded preceding
@@ -61,7 +61,7 @@ with weather_with_previous_days as (select *,
                                                                when weather_type <> previous_weather_type then 1
                                                                else 0
                                                               end) as difference
-                                                   from weather_with_previous_days as wwpd)
+                                                   from weather_with_previous_days)
    , weather_with_previous_days_and_difference_and_cumulative as (select *,
                                                                          sum(difference) over (order by the_date
                                                                              rows between unbounded preceding
@@ -85,7 +85,7 @@ with weather_with_previous_days as (select *,
                                                                when weather_type <> previous_weather_type then 1
                                                                else 0
                                                               end) as difference
-                                                   from weather_with_previous_days as wwpd)
+                                                   from weather_with_previous_days)
    , weather_with_previous_days_and_difference_and_cumulative as (select *,
                                                                          sum(difference) over (order by the_date
                                                                              rows between unbounded preceding
